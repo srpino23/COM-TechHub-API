@@ -67,6 +67,11 @@ const employeeSchema = new Schema(
         return date;
       },
     },
+    password: {
+      type: String,
+      required: false,
+      trim: true,
+    },
   },
   {
     versionKey: false,
