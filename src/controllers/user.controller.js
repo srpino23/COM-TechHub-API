@@ -1,77 +1,28 @@
-import Employee from "../models/Employee";
+import User from "../models/User";
 
-export const getUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    const adminPassword = "192834";
-    let message, data;
-
-    if (password === adminPassword) {
-      const user = await Employee.findOne({ docket: username });
-
-      if (!user) {
-        return res.status(404).json({ error: "Usuario no encontrado" });
-      }
-
-      message = "Usuario obtenido correctamente";
-      data = user;
-
-      res.status(200).json({ message, data });
-    } else {
-      const allowedPositions = ["Supervisor", "Operador"];
-
-      const user = await Employee.findOne({ docket: username });
-
-      if (!user) {
-        return res.status(404).json({ error: "Usuario no encontrado" });
-      }
-
-      if (!allowedPositions.includes(user.position)) {
-        return res
-          .status(403)
-          .json({ error: "Acceso solo para supervisores y operadores" });
-      }
-
-      if (
-        user.password &&
-        user.password !== password &&
-        user.docket !== password
-      ) {
-        return res.status(401).json({ error: "Contraseña no autorizada" });
-      }
-
-      message = "Usuario obtenido correctamente";
-      data = user;
-
-      res.status(200).json({ message, data });
-    }
+    const { name, surname, team, password } = req.body;
+    const newUser = new User({ name, surname, team, password });
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    console.error("Error al obtener el usuario:", error);
-    res.status(500).json({ error: "Error al obtener el usuario" });
+    res.status(500).json({ message: "Error registering user", error });
   }
 };
 
-export const setPassword = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    const employee = await Employee.findOneAndUpdate(
-      { docket: username },
-      { password },
-      { new: true }
-    );
-
-    if (!employee) {
-      return res.status(404).json({ error: "Empleado no encontrado" });
+    const { name, password } = req.body;
+    const user = await User.findOne({ name });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-
-    res.json({
-      message: "Contraseña establecida correctamente",
-      data: employee,
-    });
+    if (password !== user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    res.status(200).json({ message: "Login successful", user });
   } catch (error) {
-    console.error("Error al establecer la contraseña:", error);
-    res.status(500).json({ error: "Error al establecer la contraseña" });
+    res.status(500).json({ message: "Error logging in", error });
   }
 };

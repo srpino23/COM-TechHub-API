@@ -3,8 +3,7 @@ const router = Router();
 
 import * as UserCtrl from "../controllers/user.controller";
 
-router.post("/getUser", UserCtrl.getUser);
-
-router.post("/setPassword", UserCtrl.setPassword);
+router.post("/register", UserCtrl.registerUser);
+router.post("/login", UserCtrl.loginUser);
 
 export default router;

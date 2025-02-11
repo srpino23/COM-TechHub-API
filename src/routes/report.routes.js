@@ -3,12 +3,14 @@ const router = Router();
 
 import * as ReportCtrl from "../controllers/report.controller";
 
+import multer from "../libs/multer";
+
 router.post("/createReport", ReportCtrl.createReport);
 
-router.post("/updateReport/:id", ReportCtrl.updateReport);
-
-router.get("/getReports", ReportCtrl.getReports);
-
-router.get("/getReport/:id", ReportCtrl.getReportById);
+router.post(
+  "/finishJob",
+  multer.single("image"),
+  ReportCtrl.finishJob
+);
 
 export default router;

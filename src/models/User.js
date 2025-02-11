@@ -1,18 +1,23 @@
 import { Schema, model } from "mongoose";
 
-const shiftSchema = new Schema(
+const userSchema = new Schema(
   {
-    shift: {
+    name: {
       type: String,
       required: true,
       trim: true,
     },
-    entry: {
+    surname: {
       type: String,
       required: true,
       trim: true,
     },
-    exit: {
+    team: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    password: {
       type: String,
       required: true,
       trim: true,
@@ -31,4 +36,4 @@ const shiftSchema = new Schema(
   }
 );
 
-export default model("Shift", shiftSchema);
+export default model("User", userSchema);

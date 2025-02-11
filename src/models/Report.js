@@ -2,37 +2,43 @@ import { Schema, model } from "mongoose";
 
 const reportSchema = new Schema(
   {
-    hour: {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    surname: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    team: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    summary: {
       type: String,
       required: false,
       trim: true,
     },
-    firstResponder: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    firstEventOption: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    secondResponder: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    secondEventOption: {
+    supplies: [],
+    changes: {
       type: String,
       required: false,
       trim: true,
     },
     status: {
       type: String,
-      required: false,
+      required: true,
       trim: true,
     },
-    code: {
+    startTime: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    endTime: {
       type: String,
       required: false,
       trim: true,
@@ -42,63 +48,7 @@ const reportSchema = new Schema(
       required: false,
       trim: true,
     },
-    locality: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    jurisdiction: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    cameraOnSite: {},
-    firstEvent: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    secondEvent: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    story: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    storyEntrie: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    mobileArrivalTime: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    responseTime: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    operator: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    docket: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    latitude: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    longitude: {
+    imageUrl: {
       type: String,
       required: false,
       trim: true,
@@ -111,7 +61,6 @@ const reportSchema = new Schema(
         return date;
       },
     },
-    history: {},
   },
   {
     versionKey: false,
