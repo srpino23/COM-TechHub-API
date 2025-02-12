@@ -3,7 +3,13 @@ import Report from "../models/Report";
 export const createReport = async (req, res) => {
   const { name, surname, team, startTime } = req.body;
   try {
-    const newReport = new Report({ name, surname, team, startTime, status: "in progress" });
+    const newReport = new Report({
+      name,
+      surname,
+      team,
+      startTime,
+      status: "in progress",
+    });
     await newReport.save();
     res.status(201).json(newReport);
   } catch (error) {
@@ -13,7 +19,9 @@ export const createReport = async (req, res) => {
 
 export const finishJob = async (req, res) => {
   const { id, endTime, supplies, summary, location, changes } = req.body;
-  const imageUrl = req.file ? `http://172.25.67.77:2300/files/${req.file.filename}` : null;
+  const imageUrl = req.file
+    ? `http://172.25.67.77:2300/files/${req.file.filename}`
+    : null;
   try {
     const report = await Report.findById(id);
     if (!report) return res.status(404).json({ message: "Report not found" });
@@ -28,6 +36,15 @@ export const finishJob = async (req, res) => {
 
     await report.save();
     res.status(200).json(report);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getReports = async (req, res) => {
+  try {
+    const reports = await Report.find();
+    res.status(200).json(reports);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

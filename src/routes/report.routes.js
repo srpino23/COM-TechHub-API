@@ -13,4 +13,6 @@ router.post(
   ReportCtrl.finishJob
 );
 
+router.get("/getReports", ReportCtrl.getReports);
+
 export default router;
